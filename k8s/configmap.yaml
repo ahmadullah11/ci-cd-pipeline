@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-node-app-config
+  namespace: my-app
+
+data:
+  PORT: "3000"
+  APP_NAME: "My Node.Js App"
+  ENVIRONMENT: "development"
+  MONGODB_URI: "mongodb://mongodb:27017/my-app"

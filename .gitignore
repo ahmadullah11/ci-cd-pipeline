@@ -1,0 +1,5 @@
+# ~/nodejs-helm-app/.dockerignore
+node_modules
+.git
+*.md
+node-chart
