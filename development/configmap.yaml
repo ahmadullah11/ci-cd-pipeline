@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: prod-my-node-app-config
+  name: my-node-app-config
   namespace: development
 data:
   PORT: "3000"
