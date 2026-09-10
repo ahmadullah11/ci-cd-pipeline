@@ -29,6 +29,9 @@ jobs:
     needs: test
 
     steps:
+      - name: Checkout Code 
+        uses: actions/checkout@v7
+        
       - name: GHCR Login 
         uses: docker/login-action@v4
         with:
