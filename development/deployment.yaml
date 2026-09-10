@@ -16,7 +16,7 @@ spec:
       containers:
       - name: my-node-app
         image: my-node-app:1.0
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         envFrom:
           - configMapRef:
               name: my-node-app-config

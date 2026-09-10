@@ -130,8 +130,8 @@ app.get("/messages", (req, res) => {
 
 app.get("/version", (req, res) => {
     res.json({
-        version: "v1"
+        version: "v2"
     })
 })
 
-module.exports = app;
+module.exports = app
