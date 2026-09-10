@@ -1,26 +1,61 @@
 name: CI CD Pipeline
 
 on:
-  push
+  push:
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
+
+  # =========================
+  # TEST JOB
+  # =========================
   test:
     name: Verifying Test Cases
     runs-on: ubuntu-latest
-  
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v7
 
-      - name: Nodejs Setup
+      - name: Node.js Setup
         uses: actions/setup-node@v7
-        with: 
-          node-version: '22'
+        with:
+          node-version: "22"
 
-      - name: Dependencies 
-        run: npm i
-      
+      - name: Dependencies
+        run: npm ci
+
       - name: Run Test
         run: npm run test
 
-      
+
+  # =========================
+  # BUILD & PUSH JOB
+  # =========================
+  build:
+    name: Build and Push
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      - name: Login to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/my-node-app:latest
+            ghcr.io/${{ github.repository_owner }}/my-node-app:${{ github.sha }}
