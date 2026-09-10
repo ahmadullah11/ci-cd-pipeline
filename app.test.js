@@ -1,6 +1,8 @@
 const request = require("supertest");
 const app = require("./app");
 
+// write app.test.js file using supertest and jest 
+
 describe("Node.js Express API", () => {
     
     // Test GET /
