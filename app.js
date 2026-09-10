@@ -128,4 +128,10 @@ app.get("/messages", (req, res) => {
     res.json(messages);
 });
 
+app.get("/version", (req, res) => {
+    res.json({
+        version: "v1"
+    })
+})
+
 module.exports = app;

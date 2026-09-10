@@ -22,3 +22,25 @@ jobs:
 
       - name: Run Test 
         run: npm run test 
+
+  build: 
+    name: Build and Push 
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: GHCR Login 
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push 
+        uses: docker/build-push-action@v7
+        with: 
+          context: .
+          push: true 
+          tags: | 
+            ghcr.io/${{ github.repository_owner }}/my-node-app:latest 
+            ghcr.io/${{ github.repository_owner }}/my-node-app:${{ github.sha }}
