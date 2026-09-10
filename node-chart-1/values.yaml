@@ -1,0 +1,15 @@
+replicaCount: 1
+enviroment: 
+  PORT: "3000"
+  APP_NAME: "My Node.Js App - Kubernetes"
+  ENVIRONMENT: "development"
+
+image: 
+  imageName: my-node-app
+  tag: "1.0"
+  pullPolicy: Never
+
+services: 
+  type: NodePort
+  targetPort: 3000
+  containerPort: 3000
