@@ -130,7 +130,7 @@ app.get("/messages", (req, res) => {
 
 app.get("/version", (req, res) => {
     res.json({
-        version: "v3"
+        version: "v1"
     })
 })
 
