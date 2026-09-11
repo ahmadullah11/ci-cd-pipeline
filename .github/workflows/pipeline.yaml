@@ -59,3 +59,34 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/my-node-app:latest
             ghcr.io/${{ github.repository_owner }}/my-node-app:${{ github.sha }}
+
+
+  # =========================
+  # DEPLOY JOB
+  # =========================
+  deploy:
+    name: Minikube Deployment
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      - name: Check Minikube Status
+        run: minikube status
+
+      - name: Check Kubernetes
+        run: kubectl get nodes
+
+      - name: Update Image
+        run: kubectl set image deployment/my-node-app my-node-app=ghcr.io/${{ github.repository_owner }}/my-node-app:${{ github.sha }} -n development
+
+      - name: Verify Rollout
+        run: kubectl rollout status deployment/my-node-app -n development --timeout=120s
+
+      - name: Check Pods
+        run: kubectl get pods -n development
+
+      - name: Check Services
+        run: kubectl get svc -n development
+
+      - name: Done
+        run: echo "CI/CD Pipeline completed successfully!"
